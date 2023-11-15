@@ -1,0 +1,38 @@
+syntax = "proto3";
+
+
+package api;
+
+option go_package = "../pkg";
+
+
+service ProductService {
+    rpc GetAll (Empty) returns (users);
+    rpc GetUserbyId (id) returns (users);
+    rpc CreateUser (users) returns (status);
+    rpc UpdateUser (users) returns (status);
+    rpc DeleteUser (id) returns (status);
+}
+
+message Empty {
+
+}
+
+
+message users {
+    uint64 id = 6;
+    string username = 1;
+    string password = 2;
+    string email = 3;
+    string name = 4;
+    string photoProfil = 5;
+}
+
+
+message id {
+    uint64 id = 1;
+}
+
+message status {
+    bool status = 1;
+}
