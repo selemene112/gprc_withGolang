@@ -2,6 +2,7 @@ package Config
 
 import (
 	"fmt"
+	"gprc_protocolbuffer/cmd/Models"
 
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
@@ -27,6 +28,7 @@ func StartPostgresqlDB() *gorm.DB {
 	if err != nil {
 		panic("failed to connect database")
 	}
+	db.AutoMigrate(&Models.Users{})
 
 	fmt.Println("Connection Opened to Database")
 
