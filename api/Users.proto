@@ -7,11 +7,15 @@ option go_package = "../pkg";
 
 
 service ProductService {
-    rpc GetAll (Empty) returns (users);
+    rpc GetAll (Empty) returns (UsersList);
     rpc GetUserbyId (id) returns (users);
     rpc CreateUser (users) returns (status);
     rpc UpdateUser (users) returns (status);
     rpc DeleteUser (id) returns (status);
+}
+
+message UsersList {
+    repeated users data = 1;
 }
 
 message Empty {
