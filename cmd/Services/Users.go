@@ -39,3 +39,33 @@ func (p *UserServices) GetAll(ctx context.Context, req *UsersPb.Empty) (*UsersPb
 
 	return result, nil
 }
+
+func (p *UserServices) GetUserbyId(ctx context.Context, req *UsersPb.Id) (*UsersPb.Users, error) {
+	GetUserUsingId := &UsersPb.Users{}
+
+	if err := p.DB.Where("id = ?", req.Id).First(GetUserUsingId).Error; err != nil {
+		return nil, err
+	}
+
+	return GetUserUsingId, nil
+}
+
+func (p *UserServices) CreateUser(ctx context.Context, req *UsersPb.Users) (*UsersPb.Status, error) {
+
+	NewUser := &UsersPb.Users{
+		Username:    req.Username,
+		Password:    req.Password,
+		Email:       req.Email,
+		Name:        req.Name,
+		PhotoProfil: req.PhotoProfil,
+	}
+
+	if err := p.DB.Create(NewUser).Error; err != nil {
+		return nil, err
+	}
+
+	return &UsersPb.Status{
+		Status: true,
+	}, nil
+
+}
