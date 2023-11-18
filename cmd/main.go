@@ -1,6 +1,7 @@
 package main
 
 import (
+	"gprc_protocolbuffer/cmd/Config"
 	"log"
 	"net"
 
@@ -17,8 +18,10 @@ func main() {
 		panic(err)
 	}
 
+	db := Config.StartPostgresqlDB()
+
 	gRPCServer := grpc.NewServer()
-	UserService := services.UserServices{}
+	UserService := services.UserServices{DB: db}
 	UsersPb.RegisterProductServiceServer(gRPCServer, &UserService)
 
 	log.Printf("Server started at port :8080")
